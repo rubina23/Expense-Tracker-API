@@ -14,7 +14,7 @@ class UserResponse(BaseModel):
     id: int
     username: str
     email: str
-    # রিকোয়ারমেন্ট অনুযায়ী এখানে পাসওয়ার্ড ফিল্ড রাখা হয়নি 
+    # Password field is omitted as per requirements.
 
     class Config:
         from_attributes = True
@@ -31,8 +31,8 @@ class Token(BaseModel):
 # ==========================
 class TransactionBase(BaseModel):
     title: str
-    amount: float = Field(..., gt=0, description="Amount must be a positive number") # Amount > 0 ভ্যালিডেশন 
-    type: Literal["income", "expense"] # শুধুমাত্র income বা expense ভ্যালিডেশন
+    amount: float = Field(..., gt=0, description="Amount must be a positive number") # Amount > 0 validation 
+    type: Literal["income", "expense"] # only income or expense validation
     category: str
     date: date
 
@@ -45,3 +45,4 @@ class TransactionResponse(TransactionBase):
 
     class Config:
         from_attributes = True
+

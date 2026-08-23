@@ -3,12 +3,12 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 import models, schemas
 from database import get_db
-from router.auth import get_current_user  # get_current_user ইমপোর্ট করা হলো
+from router.auth import get_current_user  
 
 router = APIRouter(prefix="/transactions", tags=["Transactions"])
 
 # ==========================
-# 1. Create Transaction[cite: 1]
+# 1. Create Transaction
 # ==========================
 @router.post("/", response_model=schemas.TransactionResponse, status_code=status.HTTP_201_CREATED)
 def create_transaction(
@@ -16,19 +16,19 @@ def create_transaction(
     db: Session = Depends(get_db), 
     current_user: models.User = Depends(get_current_user)
 ):
-    # লগ-ইন করা ইউজারকে ট্রানজেকশনের ওনার হিসেবে এসাইন করা[cite: 1]
+    # Assign logged-in user as transaction owner
     new_transaction = models.Transaction(
         **transaction.model_dump(), 
         owner_id=current_user.id
     )
-    # ডেটাবেসে সেভ করা[cite: 1]
+    # Save to the database
     db.add(new_transaction)
     db.commit()
     db.refresh(new_transaction)
-    return new_transaction # তৈরি করা ট্রানজেকশন রিটার্ন করা[cite: 1]
+    return new_transaction 
 
 # ==========================
-# Transaction Filtering (15 Marks) - এটা GET অল এর আগেই লিখতে হবে, না হলে FastAPI আইডি হিসেবে কাউন্ট করতে পারে[cite: 1]
+# Transaction Filtering 
 # ==========================
 @router.get("/filter", response_model=List[schemas.TransactionResponse])
 def filter_transactions(
@@ -39,7 +39,7 @@ def filter_transactions(
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user)
 ):
-    # শুধুমাত্র লগ-ইন করা ইউজারের ট্রানজেকশনগুলো ফিল্টার করা[cite: 1]
+    # Filter transactions for the logged-in user 
     query = db.query(models.Transaction).filter(models.Transaction.owner_id == current_user.id)
     
     if type:
@@ -54,29 +54,29 @@ def filter_transactions(
     return query.all()
 
 # ==========================
-# 2. Get All Transactions[cite: 1]
+# 2. Get All Transactions
 # ==========================
 @router.get("/", response_model=List[schemas.TransactionResponse])
 def get_all_transactions(db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
-    # শুধুমাত্র লগ-ইন করা ইউজারের ট্রানজেকশন রিটার্ন করা[cite: 1]
+    # Return transactions only for the logged-in user 
     return db.query(models.Transaction).filter(models.Transaction.owner_id == current_user.id).all()
 
 # ==========================
-# 3. Get Transaction By ID[cite: 1]
+# 3. Get Transaction By ID
 # ==========================
 @router.get("/{transaction_id}", response_model=schemas.TransactionResponse)
 def get_transaction(transaction_id: int, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     transaction = db.query(models.Transaction).filter(
         models.Transaction.id == transaction_id, 
-        models.Transaction.owner_id == current_user.id # অন্য ইউজারের ট্রানজেকশন এক্সেস বন্ধ করা[cite: 1]
+        models.Transaction.owner_id == current_user.id # Prevent access to other users' transactions
     ).first()
     
     if not transaction:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Transaction not found") # 404 এরর[cite: 1]
-    return transaction # নির্দিষ্ট ট্রানজেকশন রিটার্ন করা[cite: 1]
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Transaction not found")
+    return transaction # Return a specific transaction
 
 # ==========================
-# 4. Update Transaction[cite: 1]
+# 4. Update Transaction
 # ==========================
 @router.put("/{transaction_id}", response_model=schemas.TransactionResponse)
 def update_transaction(
@@ -87,20 +87,21 @@ def update_transaction(
 ):
     transaction_query = db.query(models.Transaction).filter(
         models.Transaction.id == transaction_id, 
-        models.Transaction.owner_id == current_user.id # ইউজার শুধুমাত্র নিজের ট্রানজেকশন আপডেট করতে পারবে[cite: 1]
+        models.Transaction.owner_id == current_user.id # Allow users to update only their own transactions
     )
     transaction = transaction_query.first()
     
     if not transaction:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Transaction not found") # 404 এরর, ক্র্যাশ করবে না[cite: 1]
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Transaction not found") 
         
     transaction_query.update(updated_tran.model_dump(), synchronize_session=False)
     db.commit()
-    # আপডেট করা ট্রানজেকশন রিটার্ন করা[cite: 1]
+
+    # Return the updated transaction
     return transaction_query.first() 
 
 # ==========================
-# 5. Delete Transaction[cite: 1]
+# 5. Delete Transaction
 # ==========================
 @router.delete("/{transaction_id}", status_code=status.HTTP_200_OK)
 def delete_transaction(transaction_id: int, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
@@ -111,9 +112,9 @@ def delete_transaction(transaction_id: int, db: Session = Depends(get_db), curre
     transaction = transaction_query.first()
     
     if not transaction:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Transaction not found") # 404 এরর, ক্র্যাশ করবে না[cite: 1]
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Transaction not found") 
         
-    transaction_query.delete(synchronize_session=False) # ডেটাবেস থেকে ডিলিট করা[cite: 1]
+    transaction_query.delete(synchronize_session=False) # Delete from DB
     db.commit()
     
-    return {"message": "Transaction deleted successfully"} # কনফার্মেশন মেসেজ রিটার্ন করা[cite: 1]
+    return {"message": "Transaction deleted successfully"} 
