@@ -8,8 +8,9 @@ from router.auth import get_current_user
 import models
 
 # ১. টেস্ট করার জন্য আলাদা একটি SQLite ডাটাবেস সেটআপ
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+# SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
+# engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+engine = create_engine(connect_args={"check_same_thread": False})
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # টেস্ট ডাটাবেসে টেবিল তৈরি করা
