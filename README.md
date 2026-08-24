@@ -34,6 +34,7 @@ Follow these steps to run the project on your local machine.
 git clone https://github.com/rubina23/Expense-Tracker-API.git
 cd Expense-Tracker-API
 
+```
 ### 2. Create and activate a virtual environment
 Windows:
 ```
