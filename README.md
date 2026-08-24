@@ -60,3 +60,9 @@ Ensure your database.py file has the correct PostgreSQL/Supabase connection stri
 ### 5. Run the application
 ```
 uvicorn main:app --reload
+
+```
+## Running Tests
+To run the automated test suite with the isolated testing database, simply execute:
+```
+pytest -v
