@@ -56,7 +56,6 @@ pip install -r requirements.txt
 ### 4. Database Configuration
 Ensure your database.py file has the correct PostgreSQL/Supabase connection string for the live server, or configure it to use SQLite for local development.
 ```
-
 ```
 ### 5. Run the application
 ```
