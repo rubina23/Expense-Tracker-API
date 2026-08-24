@@ -32,7 +32,7 @@ class Token(BaseModel):
 class TransactionBase(BaseModel):
     title: str
     amount: float = Field(..., gt=0, description="Amount must be a positive number") # Amount > 0 validation 
-    type: Literal["income", "expense"] # only income or expense validation
+    type: Literal["income", "expense"] # income or expense validation
     category: str
     date: date
 

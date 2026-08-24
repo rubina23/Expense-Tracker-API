@@ -53,8 +53,7 @@ def test_get_transactions():
     assert type(response.json()) == list
 
 def test_get_specific_transaction():
-    # Get specific transaction test
-    # First, I'll try requesting ID 1
+    # Get specific transaction test. First, I'll try requesting ID 1
     response = client.get("/transactions/1")
     assert response.status_code == 200
     assert response.json()["id"] == 1
