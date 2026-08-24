@@ -12,7 +12,7 @@ import schemas
 from database import get_db
 
 # JWT Configuration 
-SECRET_KEY = "phitron-mid-term-super-secret-key" # প্রোডাকশনে এটি পরিবর্তন করে নিরাপদ কিছু দিতে হবে
+SECRET_KEY = "phitron-mid-term-super-secret-key" 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -38,14 +38,16 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 # ==========================
-# 1. User Registration[cite: 1]
+# 1. User Registration
 # ==========================
 @router.post("/register", response_model=schemas.UserResponse, status_code=status.HTTP_201_CREATED)
 def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
+
     # Check if username or email already exists
     db_user = db.query(models.User).filter(
         (models.User.username == user.username) | (models.User.email == user.email)
     ).first()
+
     if db_user:
         raise HTTPException(status_code=400, detail="Username or Email already registered")
     
@@ -72,6 +74,7 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     # Verify username and password from the database
     user = db.query(models.User).filter(models.User.username == form_data.username).first()
+
     if not user or not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

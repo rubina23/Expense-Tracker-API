@@ -8,8 +8,6 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Expense Tracker API"
-    # description="A Personal Expense Tracker API built with FastAPI",
-    # version="1.0.0"
 )
 
 # Connecting the routers to the app

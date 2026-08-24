@@ -16,6 +16,3 @@ def get_db():
         yield db
     finally:
         db.close()
-
-
-# etapi2026forex
