@@ -34,3 +34,18 @@ Follow these steps to run the project on your local machine.
 git clone https://github.com/rubina23/Expense-Tracker-API.git
 cd Expense-Tracker-API
 
+### 2. Create and activate a virtual environment
+Windows:
+```
+python -m venv venv
+venv\Scripts\activate
+```
+
+Mac/Linux:
+python3 -m venv venv
+source venv/bin/activate
+
+3. Install dependencies
+```
+pip install -r requirements.txt
+``
