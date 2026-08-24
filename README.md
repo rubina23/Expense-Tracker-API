@@ -1,8 +1,8 @@
-# Expense Tracker API 💰
+# Expense Tracker API
 
 A robust and secure RESTful API built with **FastAPI** for managing personal expenses and incomes. This project features JWT-based authentication, full CRUD operations for transactions, advanced data filtering, and automated testing.
 
-## 🚀 Features
+## Features
 
 * **User Authentication:** Secure registration and login using JWT (JSON Web Tokens) and bcrypt password hashing.
 * **Transaction Management:** Users can Create, Read, Update, and Delete their daily income and expense records.
@@ -11,7 +11,7 @@ A robust and secure RESTful API built with **FastAPI** for managing personal exp
 * **Database Integration:** Relational database management using SQLAlchemy and PostgreSQL (Supabase).
 * **Automated Testing:** Comprehensive test suite written with Pytest using an isolated SQLite test database.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * **Framework:** FastAPI
 * **Database:** PostgreSQL (Supabase) / SQLite (for testing)
@@ -31,6 +31,6 @@ Follow these steps to run the project on your local machine.
 
 ### 1. Clone the repository
 ```bash
-git clone [https://github.com/](https://expense-tracker-api-9x5u.onrender.com)
+git clone [https://expense-tracker-api-9x5u.onrender.com]
 cd Expense-Tracker-API
 
