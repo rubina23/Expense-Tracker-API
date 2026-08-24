@@ -23,7 +23,7 @@ A robust and secure RESTful API built with **FastAPI** for managing personal exp
 
 ## 🔗 Live Demo
 
-* **Live API (Swagger UI):** [https://expense-tracker-api-9x5u.onrender.com]
+* **Live API (Swagger UI):** https://expense-tracker-api-9x5u.onrender.com
 
 ## Local Setup & Installation
 
