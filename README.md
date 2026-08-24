@@ -23,7 +23,7 @@ A robust and secure RESTful API built with **FastAPI** for managing personal exp
 
 ## 🔗 Live Demo
 
-* **Live API (Swagger UI):** [https://your-render-app-name.onrender.com/docs](https://your-render-app-name.onrender.com/docs)
+* **Live API (Swagger UI):** [https://expense-tracker-api-9x5u.onrender.com]
 
 ## Local Setup & Installation
 
@@ -31,6 +31,6 @@ Follow these steps to run the project on your local machine.
 
 ### 1. Clone the repository
 ```bash
-git clone [https://expense-tracker-api-9x5u.onrender.com]
+git clone https://github.com/rubina23/Expense-Tracker-API.git
 cd Expense-Tracker-API
 
