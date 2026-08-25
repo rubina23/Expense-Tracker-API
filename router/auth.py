@@ -11,6 +11,7 @@ import models
 import schemas
 from database import get_db
 
+
 # JWT Configuration 
 SECRET_KEY = "phitron-mid-term-super-secret-key" 
 ALGORITHM = "HS256"
@@ -23,8 +24,10 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 def get_password_hash(password):
     return pwd_context.hash(password)
 
+
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
+
 
 # JWT token generation function
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
@@ -36,6 +39,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
 
 # ==========================
 # 1. User Registration
@@ -66,6 +70,8 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
     
     # Exclude hashed password from response using
     return new_user 
+
+
 
 # ==========================
 # 2. User Login
@@ -115,3 +121,4 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     if user is None:
         raise credentials_exception
     return user
+

@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field
 from datetime import date
 from typing import Literal
 
+
 # ==========================
 # User Schemas
 # ==========================
@@ -14,10 +15,10 @@ class UserResponse(BaseModel):
     id: int
     username: str
     email: str
-    # Password field is omitted as per requirements.
 
     class Config:
         from_attributes = True
+
 
 # ==========================
 # Token Schema
@@ -25,6 +26,7 @@ class UserResponse(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
 
 # ==========================
 # Transaction Schemas

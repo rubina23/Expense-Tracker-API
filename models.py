@@ -2,6 +2,8 @@ from sqlalchemy import Column, Integer, String, Float, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from database import Base
 
+
+
 class User(Base):
     __tablename__ = "users"
 
@@ -11,6 +13,8 @@ class User(Base):
     hashed_password = Column(String) # Encrypted password
 
     transactions = relationship("Transaction", back_populates="owner")
+
+
 
 class Transaction(Base):
     __tablename__ = "transactions"

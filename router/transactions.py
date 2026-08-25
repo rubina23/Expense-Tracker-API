@@ -5,7 +5,9 @@ import models, schemas
 from database import get_db
 from router.auth import get_current_user  
 
+
 router = APIRouter(prefix="/transactions", tags=["Transactions"])
+
 
 # ==========================
 # 1. Create Transaction
@@ -26,6 +28,7 @@ def create_transaction(
     db.commit()
     db.refresh(new_transaction)
     return new_transaction 
+
 
 # ==========================
 # Transaction Filtering 
@@ -53,6 +56,7 @@ def filter_transactions(
         
     return query.all()
 
+
 # ==========================
 # 2. Get All Transactions
 # ==========================
@@ -60,6 +64,7 @@ def filter_transactions(
 def get_all_transactions(db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     # Return transactions only for the logged-in user 
     return db.query(models.Transaction).filter(models.Transaction.owner_id == current_user.id).all()
+
 
 # ==========================
 # 3. Get Transaction By ID
@@ -74,6 +79,7 @@ def get_transaction(transaction_id: int, db: Session = Depends(get_db), current_
     if not transaction:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Transaction not found")
     return transaction # Return a specific transaction
+
 
 # ==========================
 # 4. Update Transaction
@@ -100,6 +106,8 @@ def update_transaction(
     # Return the updated transaction
     return transaction_query.first() 
 
+
+
 # ==========================
 # 5. Delete Transaction
 # ==========================
@@ -118,3 +126,5 @@ def delete_transaction(transaction_id: int, db: Session = Depends(get_db), curre
     db.commit()
     
     return {"message": "Transaction deleted successfully"} 
+
+
